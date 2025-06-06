@@ -6,10 +6,9 @@ Arrays are linear data structure, which is a collection of a certain data type, 
 
 Python uses List (similar to Arrays)
 
-```python 
+```python
 x = [1,2,3,4]
 print(x[1])
-
 #output
 # 2
 ```
