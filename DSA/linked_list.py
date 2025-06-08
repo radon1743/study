@@ -74,7 +74,7 @@ class LinkedList:
             self.delete_first()
         else:
             current_node = self.head
-            while(current_node.)
+            # while(current_node.)
 
 
     def size_of(self):
