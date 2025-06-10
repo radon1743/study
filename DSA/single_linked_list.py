@@ -125,15 +125,21 @@ class LinkedList:
 
 
 
-llist = LinkedList()
 
-llist.insert_first('a')
-llist.insert_last("b")
-llist.insert_multi(("a","b","c"))
-llist.insert_at_index(0,"j")
-llist.insert_at_index(2,"z")
-llist.update_node(2,"o")
-llist.printL()
+if __name__=="main":
+    llist = LinkedList()
 
-llist.reverse()
-llist.printL()
+    llist.insert_first('a')
+    llist.insert_last("b")
+    llist.insert_multi(("a","b","c"))
+    llist.insert_at_index(0,"j")
+    llist.insert_at_index(2,"z")
+    llist.update_node(2,"o")
+    llist.printL()
+
+    llist.reverse()
+    llist.printL()
+
+
+
+
