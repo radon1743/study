@@ -7,8 +7,6 @@ class LinkedList:
     def __init__(self):
         self.head = None
 
-     
-
     def insert_first(self,value):
         first_node = Node(value)
         if self.head is None:
@@ -72,9 +70,34 @@ class LinkedList:
     def delete_node(self, index):
         if(index==0):
             self.delete_first()
+            return
+        elif index == self.size_of():
+            self.delete_last()
         else:
-            current_node = self.head
-            # while(current_node.)
+            current_node = self.head.next
+            position = 1
+            while(current_node.next):
+                if index == position+1:
+                    current_node.next = current_node.next.next
+                    return
+                position+=1
+                current_node = current_node.next
+
+    def reverse(self):
+        current_node = self.head
+        prev = None
+
+
+        while current_node:
+            next_node = current_node.next
+
+            current_node.next = prev
+
+            prev = current_node
+            current_node = next_node
+        
+        self.head = prev 
+
 
 
     def size_of(self):
@@ -94,22 +117,29 @@ class LinkedList:
         while (current_node.next):
             print(current_node.value, end= "->")
             current_node = current_node.next
+
         print(current_node.value, end="\n")
         print()
     
 
-llist = LinkedList()
 
-llist.insert_first('a')
-llist.insert_last("b")
-llist.insert_multi(("a","b","c"))
-llist.insert_at_index(0,"j")
-llist.insert_at_index(2,"z")
-llist.update_node(2,"o")
-llist.printL()
 
-llist.delete_first()
-llist.printL()
 
-llist.delete_last()
-llist.printL()
+
+if __name__=="main":
+    llist = LinkedList()
+
+    llist.insert_first('a')
+    llist.insert_last("b")
+    llist.insert_multi(("a","b","c"))
+    llist.insert_at_index(0,"j")
+    llist.insert_at_index(2,"z")
+    llist.update_node(2,"o")
+    llist.printL()
+
+    llist.reverse()
+    llist.printL()
+
+
+
+
