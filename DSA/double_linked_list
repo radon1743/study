@@ -1,3 +1,5 @@
+from colorama import Fore,Style
+
 class Node():
     def __init__(self,value):
         self.prev = None 
@@ -33,19 +35,68 @@ class Dllist:
             self.insert_first(value)
         else:
             position = 1
-            while current_head.next and position<index:
+            while current_head.next and position!=index:
                 current_head = current_head.next
                 position+=1
             new_node = Node(value)
+
+            prev = current_head.prev
             
-            new_node.next = current_head.next
-            new_node.prev = current_head
-
-            current_head.next = new_node
-            current_head.next.prev = new_node
+            new_node.prev = prev
+            new_node.next = current_head
             
+            if prev:
+                prev.next = new_node
+    
+            current_head.prev = new_node
+            
+    def insert_after(self, index,value):
+        current_head = self.head
+        position = 0
+        while position!=index and current_head.next is not None:
+            position+=1
+            current_head = current_head.next
+        new_node = Node(value)
+        
+        next = current_head.next
+        new_node.next = next
+        new_node.prev = current_head
 
+        if next :
+            next.prev = new_node
+        current_head.next = new_node 
 
+    def insert_loc(self,value,index):
+        current_head = self.head
+
+    def delete_first(self):
+        current_head = self.head
+        current_head.next.prev = None
+        self.head = current_head.next     
+        
+    def delete_last(self):
+        current_head = self.head
+        while current_head.next.next:
+            current_head = current_head.next
+        current_head.next = None
+
+    def delete_node(self,index):
+        current_head = self.head
+        if(index==0):
+            self.delete_first()
+            return
+        position = 1
+        current_head = current_head.next
+        while current_head.next is not None and index!=position:
+            current_head = current_head.next  
+            position+=1
+        print(current_head.value)
+        # next = current_head.next
+        prev = current_head.next.prev
+        # if (next is not None):
+            # next.prev = prev
+            # prev.next = next 
+        print( prev.value)
 
     def print_dl(self):
 
@@ -53,14 +104,16 @@ class Dllist:
         double_arrow = " <--> "
         head_space = (len(double_arrow) + len("None"))*" " 
         print()
-        print(head_space + "H")
+        print(head_space + Fore.GREEN+"H")
         print(head_space + "↓")
-        print("None", end = double_arrow)
+        print(Style.RESET_ALL, end="")
+        print(Fore.RED+"None", end = Style.RESET_ALL+double_arrow)
         while current_head.next:
             print(current_head.value, end=double_arrow)
             current_head = current_head.next
-        print(current_head.value, end= double_arrow + "None\n")
+        print(current_head.value, end= double_arrow + Fore.RED+"None\n")
         print()
+        print(Style.RESET_ALL, end="")
 
 
 dllist = Dllist()
@@ -74,8 +127,20 @@ dllist.print_dl()
 dllist.insert_last("m")
 dllist.print_dl()
     
-dllist.insert_before(1,"z")
-dllist.print_dl()
-
 dllist.insert_before(6,"o")
 dllist.print_dl()
+
+dllist.insert_after(4,"s")
+dllist.print_dl()
+
+# dllist.delete_first()
+# dllist.print_dl()
+
+# dllist.delete_last()
+# dllist.print_dl()
+
+# dllist.delete_node(2)
+# dllist.print_dl()
+
+# dllist.delete_node(3)
+# dllist.print_dl()

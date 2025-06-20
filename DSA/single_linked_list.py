@@ -111,35 +111,118 @@ class LinkedList:
 
     def printL(self):
         current_node = self.head
-        print()
-        print("H")
-        print("↓")
-        while (current_node.next):
-            print(current_node.value, end= "->")
-            current_node = current_node.next
+        if (current_node):
+            print()
+            print("H")
+            print("↓")
+            while (current_node.next):
+                print(current_node.value, end= "->")
+                current_node = current_node.next
 
-        print(current_node.value, end="\n")
-        print()
+            print(current_node.value, end="\n")
+            print()
+        else:
+            print(self.head)
+
+
+
+def add_node(l1,l2,c):
+
+    if not (l1 or l2) and c == 0:
+        return None
+
+
+    l1_val = l1.value if l1 else 0 
+    l2_val = l2.value if l2 else 0 
+
+    sum = l1_val + l2_val + c
     
+    h = Node( sum%10 )
+    h.next = add_node(l1.next if l1 else None,l2.next if l2 else None,sum//10)     
+
+    return h
+
+def add_linked_lists(l1,l2):
+
+    h1 = l1.head
+    h2 = l2.head
+    r = LinkedList()
+    c = 0  
+    while h1 or h2:
+        if h1 and h2:
+            sum = h1.value + h2.value
+            h1, h2 = h1.next, h2.next 
+        elif h1:
+            sum = h1.value
+            h1 = h1.next
+        else:
+            sum = h2.value
+            h2 = h2.next
+
+        r.insert_last(sum%10 + c)
+        c = sum//10
+    if c >0:
+        r.insert_last(c)
+    r.printL()
+
+def remove_n_node(head, n):
+    front = head
+    back =  head
+    i = 0
+    while front.next and i<n:
+        front = front.next
+        i+=1
 
 
 
+    while front.next:
+        back = back.next
+        front = front.next
+    if back.next == front or back == front:
+        if n == 1:
+            return back.next
+        elif n ==2:
+            return front
+    back.next = back.next.next
+
+    return head        
+
+def merge_nodes(l1,l2):
+
+    if not l1:
+        return l2
+    if not l2:
+        return l1
+
+    if l1.value < l2.value:
+        l1.next = merge_nodes(l1.next,l2)
+        return l1
+    else: 
+        l2.next = merge_nodes(l1,l2.next)
+        return l2
+
+def swap_pair(head):
+    current_head = head.next
+    head.next = current_head
+
+    while current_head.next:
+        current_head = head.next
+        head.next = current_head
+
+        current_head = current_head.next
+        head = head.next
+    return current_head
 
 
-if __name__=="main":
-    llist = LinkedList()
 
-    llist.insert_first('a')
-    llist.insert_last("b")
-    llist.insert_multi(("a","b","c"))
-    llist.insert_at_index(0,"j")
-    llist.insert_at_index(2,"z")
-    llist.update_node(2,"o")
-    llist.printL()
+if __name__=="__main__":
+    list1 = LinkedList()
+    list1.insert_multi((1,2,3,4))
+    list1.printL()
+    
+    list2 = LinkedList()
+    list2.printL()
 
-    llist.reverse()
-    llist.printL()
-
-
-
+    list2.head = swap_pair(list1.head)
+    list2.printL()
 
